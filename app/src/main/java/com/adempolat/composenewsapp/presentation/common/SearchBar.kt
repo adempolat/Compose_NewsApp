@@ -4,6 +4,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,21 +41,26 @@ fun SearchBar(
         MutableInteractionSource()
     }
     
-    val isClicked = interactionSource.collectIsFocusedAsState().value
+    val isClicked = interactionSource.collectIsPressedAsState().value
     LaunchedEffect(key1 = isClicked){
         if (isClicked){
             onClick?.invoke()
         }
     }
     
-    Box(modifier = Modifier) {
+    Box(modifier = modifier) {
         TextField(
-            modifier=Modifier.fillMaxWidth(),
+            modifier= Modifier
+                .fillMaxWidth()
+                .searchBarBorder(),
             value = text,
             onValueChange = onValueChange,
             readOnly = readOnly,
             leadingIcon = {
-                Icon(painter = painterResource(id = R.drawable.ic_search), contentDescription = null, modifier = Modifier.size(Iconsize), tint = colorResource(
+                Icon(painter = painterResource(id = R.drawable.ic_search),
+                    contentDescription = null,
+                    modifier = Modifier.size(Iconsize),
+                    tint = colorResource(
                     id = R.color.body
                 ))
             },
@@ -77,7 +83,7 @@ fun SearchBar(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(
                 onSearch = {
-                    onSearch
+                    onSearch()
                 }
             ),
             textStyle = MaterialTheme.typography.bodySmall,

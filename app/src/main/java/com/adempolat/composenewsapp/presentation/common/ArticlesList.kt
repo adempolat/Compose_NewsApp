@@ -1,5 +1,6 @@
 package com.adempolat.composenewsapp.presentation.common
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -11,6 +12,28 @@ import com.adempolat.composenewsapp.presentation.Dimension.ExtraSmallPadding2
 import com.adempolat.composenewsapp.presentation.Dimension.MediumPadding1
 import com.adempolat.composenewsapp.presentation.Dimension.MediumPadding2
 
+@SuppressLint("SuspiciousIndentation")
+@Composable
+fun ArticleList(
+    modifier: Modifier=Modifier,
+    articles: List<Article>,
+    onClick: (Article) -> Unit
+){
+        LazyColumn(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(MediumPadding2),
+            contentPadding = PaddingValues(all = ExtraSmallPadding2)
+        ){
+            items(count = articles.size){
+                val article = articles[it]
+                    ArticleCard(article = article, onClick = { onClick(article) })
+
+            }
+        }
+
+}
+
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun ArticleList(
     modifier: Modifier=Modifier,
@@ -19,7 +42,7 @@ fun ArticleList(
 ){
  val handlePagingResult = handlePagingResult(articles = articles)
     if (handlePagingResult){
-        LazyColumn(modifier = Modifier.fillMaxSize(),
+        LazyColumn(modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(MediumPadding2),
         contentPadding = PaddingValues(all = ExtraSmallPadding2)
         ){

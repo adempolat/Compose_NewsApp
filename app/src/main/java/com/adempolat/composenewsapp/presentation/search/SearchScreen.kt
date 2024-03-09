@@ -22,13 +22,12 @@ fun SearchScreen(
             start = MediumPadding1,
             end = MediumPadding1
         )
-        .statusBarsPadding()
-        .fillMaxSize()) {
+        .statusBarsPadding()) {
         SearchBar(
             text = state.searchQuery,
             readOnly = false,
             onValueChange = { event(SearchEvent.UpdateSearchQuery(it)) },
-            onSearch = { event ( SearchEvent.SearchNews)}
+            onSearch = { event(SearchEvent.SearchNews)}
         ) 
         Spacer(modifier = androidx.compose.ui.Modifier.height(MediumPadding1))
         state.articles?.let { 
